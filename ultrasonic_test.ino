@@ -1,32 +1,35 @@
-const int trigPin = 9;
-const int echoPin = 10;
-
+int trigPin = 9;
+int echoPin = 10;
 long duration;
 int distance;
 
-void setup() {
-pinMode(trigPin, OUTPUT); 
-pinMode(echoPin, INPUT); 
-Serial.begin(9600); 
-
+void setup() 
+{
+  pinMode(trigPin, OUTPUT); 
+  pinMode(echoPin, INPUT); 
+  Serial.begin(9600); 
 }
-void loop() {
+void loop() 
+{
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
 
-digitalWrite(trigPin, LOW);
-delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
 
-digitalWrite(trigPin, HIGH);
-delayMicroseconds(10);
-digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  // This is total Duration ie to and fro
+ 
+  // speed of sound = 343 m/s   ie 34300 cm/s
+  //speed = dist / time
+  // so, distance = speed * time 
+  
+  distance= (duration*0.0343)/2;    //One side distance = (time * speed)/2 
 
-
-duration = pulseIn(echoPin, HIGH);
-
-distance= duration*0.034/2;    //distance = (time * speed)/2 
-
-Serial.print("Distance: ");
-Serial.print(distance);
-Serial.println(" cm");
-delay(1000);
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+  delay(1000);
 }
 
